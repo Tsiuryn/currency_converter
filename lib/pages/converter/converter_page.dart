@@ -38,7 +38,8 @@ class _ConverterPageState extends State<ConverterPage> {
                   context: context,
                   firstDate: DateTime(2000),
                   lastDate: DateTime.now().add(const Duration(days: 1)),
-                  currentDate: state.selectedDate,
+                  currentDate: DateTime.now(),
+                  initialDate: state.selectedDate,
                 ).then((value) {
                   if (value != null) {
                     context.read<ConverterBloc>().fetchCurrencies(dateTime: value);
