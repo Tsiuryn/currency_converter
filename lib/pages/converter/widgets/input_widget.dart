@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,8 +26,7 @@ class InputWidget extends StatefulWidget {
 class InputWidgetState extends State<InputWidget> {
   bool _showClearButton = false;
 
-
-  void clearButton(bool showClearButton){
+  void clearButton(bool showClearButton) {
     setState(() {
       _showClearButton = showClearButton;
     });
@@ -47,22 +45,29 @@ class InputWidgetState extends State<InputWidget> {
         style: GoogleFonts.castoroTitling(
           fontSize: 22,
         ),
-        suffix: _showClearButton ? GestureDetector(
-          onTap: widget.onTapClear?.call,
-          behavior: HitTestBehavior.opaque,
-          child:  Container(
-            padding: const EdgeInsets.only(left:  24.0, right: 8, top: 8, bottom: 8,),
-            child: const CircleAvatar(
-              radius: 8,
-              backgroundColor: Colors.grey,
-              child: Icon(
-                Icons.clear,
-                color: Colors.white,
-                size: 12,
-              ),
-            ),
-          ),
-        ) : null,
+        suffix: _showClearButton
+            ? GestureDetector(
+                onTap: widget.onTapClear?.call,
+                behavior: HitTestBehavior.opaque,
+                child: Container(
+                  padding: const EdgeInsets.only(
+                    left: 24.0,
+                    right: 8,
+                    top: 8,
+                    bottom: 8,
+                  ),
+                  child: const CircleAvatar(
+                    radius: 8,
+                    backgroundColor: Colors.grey,
+                    child: Icon(
+                      Icons.clear,
+                      color: Colors.white,
+                      size: 12,
+                    ),
+                  ),
+                ),
+              )
+            : null,
         inputFormatters: [
           _NumberInputFormatter(),
         ],
@@ -79,7 +84,8 @@ class _NumberInputFormatter extends TextInputFormatter {
       return newValue.copyWith(text: '');
     }
 
-    if (!newValue.text.startsWith('.') && RegExp(r'^\d*\.?\d*$').hasMatch(newValue.text)) {
+    if (!newValue.text.startsWith('.') &&
+        RegExp(r'^\d*\.?\d*$').hasMatch(newValue.text)) {
       return newValue;
     } else {
       return oldValue;

@@ -17,27 +17,27 @@ enum Currency {
 }
 
 String currencyConverter({
- required  Currency inputCurrency,
- required  Currency outputCurrency,
- required  double value,
+  required Currency inputCurrency,
+  required Currency outputCurrency,
+  required double value,
   required ConverterModel model,
-}){
-
-
-  final outputPost = model.posts.firstWhereOrNull((element) => element.currency == outputCurrency);
-  final inputPost = model.posts.firstWhereOrNull((element) => element.currency == inputCurrency);
-  if(inputCurrency == Currency.byn){
-    if(outputPost == null) return 'nan';
+}) {
+  final outputPost = model.posts
+      .firstWhereOrNull((element) => element.currency == outputCurrency);
+  final inputPost = model.posts
+      .firstWhereOrNull((element) => element.currency == inputCurrency);
+  if (inputCurrency == Currency.byn) {
+    if (outputPost == null) return 'nan';
 
     return convertBynToCurrency(post: outputPost, value: value).roundNumber(2);
   }
-  if(outputCurrency == Currency.byn){
-    if(inputPost == null) return 'nan';
+  if (outputCurrency == Currency.byn) {
+    if (inputPost == null) return 'nan';
 
     return convertCurrencyToByn(post: inputPost, value: value).roundNumber(2);
   }
 
-  if(inputPost == null || outputPost == null){
+  if (inputPost == null || outputPost == null) {
     return 'nan';
   }
 
@@ -49,19 +49,18 @@ String currencyConverter({
 double convertBynToCurrency({
   required Post post,
   required double value,
-}){
+}) {
   return (value * post.curScale / post.curOfficialRate);
 }
 
 double convertCurrencyToByn({
   required Post post,
   required double value,
-}){
+}) {
   return (value * post.curOfficialRate / post.curScale);
 }
 
 extension MathExtension on double {
-
   ///
   /// int fractionDigits = 2
   ///

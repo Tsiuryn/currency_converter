@@ -18,9 +18,9 @@ class ListCurrencies extends StatelessWidget {
     return Expanded(
       child: ListView.separated(
           itemCount: model.posts.length,
-          separatorBuilder: (_, index){
+          separatorBuilder: (_, index) {
             return const Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 16.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Divider(),
             );
           },
@@ -29,7 +29,7 @@ class ListCurrencies extends StatelessWidget {
             bool isLast = model.posts.length - 1 == index;
 
             return Padding(
-              padding: EdgeInsets.only(bottom: isLast ? 60 :  0.0),
+              padding: EdgeInsets.only(bottom: isLast ? 60 : 0.0),
               child: CurrencyItem(post: post),
             );
           }),
@@ -48,7 +48,10 @@ class CurrencyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8,),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16.0,
+        vertical: 8,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -65,9 +68,9 @@ class CurrencyItem extends StatelessWidget {
                 Text(
                   '${post.curScale} ${post.curName} = ${post.curOfficialRate} ${Currency.byn.value}',
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      fontWeight: FontWeight.w300,
-                      color: Colors.grey,
-                  ),
+                        fontWeight: FontWeight.w300,
+                        color: Colors.grey,
+                      ),
                 )
               ],
             ),
@@ -75,9 +78,9 @@ class CurrencyItem extends StatelessWidget {
           Text(
             post.curOfficialRate.toString(),
             style: GoogleFonts.alumniSans(
-                  color: Colors.blue,
-                  fontSize: 28,
-                ),
+              color: Colors.blue,
+              fontSize: 28,
+            ),
           ),
         ],
       ),

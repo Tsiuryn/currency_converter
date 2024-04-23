@@ -36,13 +36,16 @@ class _ConverterPageState extends State<ConverterPage> {
               onPressed: () {
                 showDatePicker(
                   context: context,
+                  locale: const Locale('ru'),
                   firstDate: DateTime(2000),
                   lastDate: DateTime.now().add(const Duration(days: 1)),
                   currentDate: DateTime.now(),
                   initialDate: state.selectedDate,
                 ).then((value) {
                   if (value != null) {
-                    context.read<ConverterBloc>().fetchCurrencies(dateTime: value);
+                    context
+                        .read<ConverterBloc>()
+                        .fetchCurrencies(dateTime: value);
                   }
                 });
               },

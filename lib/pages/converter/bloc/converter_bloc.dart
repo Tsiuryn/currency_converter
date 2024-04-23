@@ -7,7 +7,9 @@ import 'package:intl/intl.dart';
 class ConverterBloc extends Cubit<ConverterModel> {
   final CurrencyRepository repo;
 
-  ConverterBloc({required this.repo,}): super(ConverterModel.empty()){
+  ConverterBloc({
+    required this.repo,
+  }) : super(ConverterModel.empty()) {
     fetchCurrencies();
   }
 
@@ -15,21 +17,20 @@ class ConverterBloc extends Cubit<ConverterModel> {
     try {
       emit(state.copyWith(converterStates: ConverterStates.loading));
       late List<Post> posts;
-      if(dateTime != null){
+      if (dateTime != null) {
         final formatter = DateFormat('yyyy-MM-dd');
-        posts = await repo.getPosts(date : formatter.format(dateTime));
-      }else{
+        posts = await repo.getPosts(date: formatter.format(dateTime));
+      } else {
         posts = await repo.getPosts();
       }
       emit(state.copyWith(
-          converterStates: ConverterStates.success,
-          posts: posts,
+        converterStates: ConverterStates.success,
+        posts: posts,
         selectedDate: dateTime,
       ));
     } catch (e) {
       emit(state.copyWith(converterStates: ConverterStates.error));
     }
-
   }
 }
 
@@ -46,9 +47,16 @@ class ConverterModel {
     required this.selectedDate,
   });
 
-  ConverterModel.empty(): posts = [], converterStates = ConverterStates.initial, currencies = [
-    Currency.byn, Currency.usd, Currency.eur, Currency.rur,
-  ], selectedDate = DateTime.now();
+  ConverterModel.empty()
+      : posts = [],
+        converterStates = ConverterStates.initial,
+        currencies = [
+          Currency.byn,
+          Currency.usd,
+          Currency.eur,
+          Currency.rur,
+        ],
+        selectedDate = DateTime.now();
 
   ConverterModel copyWith({
     List<Currency>? currencies,
@@ -65,6 +73,4 @@ class ConverterModel {
   }
 }
 
-enum ConverterStates{
-  initial, loading, success, error
-}
+enum ConverterStates { initial, loading, success, error }

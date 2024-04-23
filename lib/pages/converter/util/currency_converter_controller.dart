@@ -7,8 +7,8 @@ class CurrencyConverterController {
   final List<Currency> currencies;
 
   CurrencyConverterController({
-      required this.converter,
-      this.currencies = Currency.values,
+    required this.converter,
+    this.currencies = Currency.values,
   }) {
     _initTextControllers();
     _selectedCurrency = currencies.firstOrNull ?? Currency.byn;
@@ -25,7 +25,7 @@ class CurrencyConverterController {
     }
   }
 
-  void clearData (){
+  void clearData() {
     _usedController = true;
     textControllers.forEach((key, value) {
       value.controller.text = '';
@@ -50,7 +50,7 @@ class CurrencyConverterController {
   }
 
   void _focusListener(Currency currency, FocusNode focus) {
-    if(focus.hasFocus){
+    if (focus.hasFocus) {
       _selectedCurrency = currency;
     }
     final inputKey = textControllers[currency]?.inputKey;
@@ -107,7 +107,6 @@ class InputData {
     required this.focusNode,
   });
 }
-
 
 abstract class Converter {
   String convertInput({

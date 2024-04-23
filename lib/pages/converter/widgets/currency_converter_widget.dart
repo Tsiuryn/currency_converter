@@ -50,13 +50,14 @@ class _CurrencyConverterWidgetState extends State<CurrencyConverterWidget> {
         builder: (context, state) {
       _model = state;
 
-      if(_selectedDate != state.selectedDate){
+      if (_selectedDate != state.selectedDate) {
         _cController.clearData();
-      _selectedDate = state.selectedDate;
+        _selectedDate = state.selectedDate;
       }
 
-
-      final date = state.converterStates == ConverterStates.loading ? '' : DateFormat.yMMMMd('ru').format(_selectedDate ?? DateTime.now());
+      final date = state.converterStates == ConverterStates.loading
+          ? ''
+          : DateFormat.yMMMMd('ru').format(_selectedDate ?? DateTime.now());
       return CardWidget(
           child: Column(
         mainAxisSize: MainAxisSize.min,
