@@ -35,7 +35,7 @@ class CurrencyRepository {
 
   List<Post> _sortPosts (List<Post> posts){
     if(posts.isEmpty) return posts;
-    final listCurrency = [Currency.usd, Currency.eur, Currency.rur];
+    final listCurrency = [Currency.usd, Currency.eur, Currency.rur, Currency.gbp];
     final currentListPost = [...posts];
     for (var i = 0; i < listCurrency.length; ++i) {
       final post = currentListPost.firstWhereOrNull((e) => e.currency == listCurrency[i]);

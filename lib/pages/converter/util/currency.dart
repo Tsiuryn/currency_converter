@@ -7,6 +7,7 @@ enum Currency {
   usd('USD'),
   eur('EUR'),
   uah('UAH'),
+  gbp('GBP'),
   rur('RUB'),
   unknown('');
 
