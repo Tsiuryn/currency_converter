@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class InputWidget extends StatefulWidget {
   final String prefix;
@@ -43,11 +44,15 @@ class InputWidgetState extends State<InputWidget> {
         controller: widget.controller,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         readOnly: widget.readOnly,
+        style: GoogleFonts.castoroTitling(
+          fontSize: 22,
+        ),
         suffix: _showClearButton ? GestureDetector(
           onTap: widget.onTapClear?.call,
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: CircleAvatar(
+          behavior: HitTestBehavior.opaque,
+          child:  Container(
+            padding: const EdgeInsets.only(left:  24.0, right: 8, top: 8, bottom: 8,),
+            child: const CircleAvatar(
               radius: 8,
               backgroundColor: Colors.grey,
               child: Icon(
