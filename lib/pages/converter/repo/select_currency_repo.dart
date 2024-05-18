@@ -25,14 +25,14 @@ class SelectCurrencyRepoImpl implements SelectCurrencyRepo {
   Future<void> _getSelectedCurrencies() async {
     final pref = await _pref;
     final listCurText = pref.getStringList(_selectedCurrencyKey);
-    final List<Currency> currencies = listCurText != null
-        ? listCurText
+    final List<Currency> currencies = listCurText == null || listCurText.isEmpty
+        ? [Currency.byn]
+        : listCurText
             .map((e) => Currency.values.firstWhere(
                   (element) => e == element.value,
                   orElse: () => Currency.unknown,
                 ))
-            .toList()
-        : [Currency.byn];
+            .toList();
 
     _subject.value = currencies;
   }

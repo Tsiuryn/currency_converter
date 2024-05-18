@@ -75,8 +75,8 @@ class _ConverterPageState extends State<ConverterPage>
                     model: state,
                   ),
                   DraggableScrollableSheet(
-                    initialChildSize: 0.06,
-                    minChildSize: 0.06,
+                    initialChildSize: 0.5,
+                    minChildSize: 0.08,
                     maxChildSize: 0.5,
                     snap: true,
                     builder: (context, controller) {
@@ -92,7 +92,7 @@ class _ConverterPageState extends State<ConverterPage>
                             Expanded(
                                 child: SingleChildScrollView(
                                     controller: controller,
-                                    child: CurrencyConverterWidget())),
+                                    child: const CurrencyConverterWidget())),
                           ],
                         ),
                       );

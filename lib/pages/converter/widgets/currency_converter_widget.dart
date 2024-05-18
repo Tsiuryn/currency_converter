@@ -3,7 +3,9 @@ import 'package:curency_converter/pages/converter/select_currency/select_currenc
 import 'package:curency_converter/pages/converter/util/currency.dart';
 import 'package:curency_converter/pages/converter/util/currency_converter_controller.dart';
 import 'package:curency_converter/pages/converter/widgets/input_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CurrencyConverterWidget extends StatefulWidget {
@@ -79,23 +81,31 @@ class _CurrencyConverterWidgetState extends State<CurrencyConverterWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
+              const SizedBox(
+                height: 8,
+              ),
+              Stack(
+                alignment: Alignment.centerRight,
                 children: [
-                  const Spacer(),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
+                  Row(
                     children: [
-                      const Icon(Icons.keyboard_arrow_up_rounded),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: Text(
-                          'Конвертер валют',
-                          style: Theme.of(context).textTheme.bodyMedium,
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.keyboard_arrow_up_rounded),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 16.0),
+                              child: Text(
+                                'Конвертер валют',
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                  const Spacer(),
                   IconButton(
                     onPressed: () {
                       showSelectCurrencyBottomSheet(context);
