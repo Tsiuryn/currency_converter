@@ -1,11 +1,10 @@
 import 'package:curency_converter/pages/converter/bloc/converter_bloc.dart';
+import 'package:curency_converter/pages/converter/select_currency/select_currency_bottom_sheet.dart';
 import 'package:curency_converter/pages/converter/util/currency.dart';
 import 'package:curency_converter/pages/converter/util/currency_converter_controller.dart';
-import 'package:curency_converter/pages/converter/widgets/card_widget.dart';
 import 'package:curency_converter/pages/converter/widgets/input_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 class CurrencyConverterWidget extends StatefulWidget {
   const CurrencyConverterWidget({super.key});
@@ -23,7 +22,19 @@ class _CurrencyConverterWidgetState extends State<CurrencyConverterWidget> {
   @override
   void initState() {
     super.initState();
-    _cController = CurrencyConverterController(
+    _cController = getCurrencyController(_model.currencies);
+  }
+
+  void _updateController(List<Currency> currencies) {
+    _cController.dispose();
+    setState(() {
+      _cController = getCurrencyController(currencies);
+    });
+  }
+
+  CurrencyConverterController getCurrencyController(
+          List<Currency> currencies) =>
+      CurrencyConverterController(
         converter: AppCurrencyConverter(
           (input, output, value) {
             return currencyConverter(
@@ -34,9 +45,8 @@ class _CurrencyConverterWidgetState extends State<CurrencyConverterWidget> {
             );
           },
         ),
-        // currencies: [Currency.byn, Currency.eur,]
-        currencies: _model.currencies);
-  }
+        currencies: currencies,
+      );
 
   @override
   void dispose() {
@@ -46,71 +56,81 @@ class _CurrencyConverterWidgetState extends State<CurrencyConverterWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ConverterBloc, ConverterModel>(
-        builder: (context, state) {
-      _model = state;
+    return BlocConsumer<ConverterBloc, ConverterModel>(
+      listener: (context, state) {
+        if (state.changedCurrencies) {
+          _updateController(state.currencies);
+        }
+      },
+      builder: (context, state) {
+        _model = state;
 
-      if (_selectedDate != state.selectedDate) {
-        _cController.clearData();
-        _selectedDate = state.selectedDate;
-      }
+        if (_selectedDate != state.selectedDate) {
+          _cController.clearData();
+          _selectedDate = state.selectedDate;
+        }
 
-      final date = state.converterStates == ConverterStates.loading
-          ? ''
-          : DateFormat.yMMMMd('ru').format(_selectedDate ?? DateTime.now());
-      return CardWidget(
-          child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'на $date',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                Visibility(
-                  visible: state.converterStates == ConverterStates.loading,
-                  child: const SizedBox(
-                    height: 12,
-                    width: 12,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                    ),
-                  ),
-                )
-              ],
-            ),
+        return Padding(
+          padding: const EdgeInsets.only(
+            left: 16.0,
+            right: 16.0,
+            bottom: 84,
           ),
-          ..._cController.currencies.map((currency) {
-            return Row(
-              children: [
-                Expanded(
-                  child: InputWidget(
-                    key: _cController.textControllers[currency]?.inputKey,
-                    prefix: currency.value,
-                    readOnly: false,
-                    controller:
-                        _cController.textControllers[currency]?.controller,
-                    focusNode:
-                        _cController.textControllers[currency]?.focusNode,
-                    onTapClear: () {
-                      _cController.onTapClearButton(currency);
-                    },
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  const Spacer(),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.keyboard_arrow_up_rounded),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Text(
+                          'Конвертер валют',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            );
-          })
-        ],
-      ));
-    });
-  }
-
-  void _unfocus(BuildContext context) {
-    FocusScope.of(context).unfocus();
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {
+                      showSelectCurrencyBottomSheet(context);
+                    },
+                    icon: const Icon(Icons.select_all_rounded),
+                  ),
+                ],
+              ),
+              ..._cController.currencies.map(
+                (currency) {
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: InputWidget(
+                          key: _cController.textControllers[currency]?.inputKey,
+                          prefix: currency.value,
+                          readOnly: false,
+                          controller: _cController
+                              .textControllers[currency]?.controller,
+                          focusNode:
+                              _cController.textControllers[currency]?.focusNode,
+                          onTapClear: () {
+                            _cController.onTapClearButton(currency);
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
 

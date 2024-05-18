@@ -13,10 +13,10 @@ class CardWidget extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Material(
         elevation: 20,
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
         child: Container(
-          padding: EdgeInsets.all(16),
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.all(16),
+          decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(16)),
           ),
           child: child,

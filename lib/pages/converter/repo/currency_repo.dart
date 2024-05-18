@@ -38,7 +38,7 @@ class CurrencyRepository {
     final listCurrency = [
       Currency.usd,
       Currency.eur,
-      Currency.rur,
+      Currency.rub,
       Currency.gbp
     ];
     final currentListPost = [...posts];

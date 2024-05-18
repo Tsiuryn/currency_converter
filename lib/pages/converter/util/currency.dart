@@ -6,9 +6,35 @@ enum Currency {
   byn('BYN'),
   usd('USD'),
   eur('EUR'),
+  rub('RUB'),
+  aud('AUD'),
+  amd('AMD'),
+  bgn('BGN'),
+  brl('BRL'),
   uah('UAH'),
+  dkk('DKK'),
+  aed('AED'),
+  vnd('VND'),
+  pln('PLN'),
+  jpy('JPY'),
+  inr('INR'),
+  irr('IRR'),
+  isk('ISK'),
+  cad('CAD'),
+  cny('CNY'),
+  kwd('KWD'),
+  mdl('MDL'),
+  nzd('NZD'),
+  nok('NOK'),
+  xdr('XDR'),
+  sgd('SGD'),
+  kgs('KGS'),
+  kzt('KZT'),
+  tur('TRY'),
   gbp('GBP'),
-  rur('RUB'),
+  czk('CZK'),
+  sek('SEK'),
+  chf('CHF'),
   unknown('');
 
   const Currency(this.value);
@@ -29,12 +55,12 @@ String currencyConverter({
   if (inputCurrency == Currency.byn) {
     if (outputPost == null) return 'nan';
 
-    return convertBynToCurrency(post: outputPost, value: value).roundNumber(2);
+    return convertBynToCurrency(post: outputPost, value: value).roundNumber(4);
   }
   if (outputCurrency == Currency.byn) {
     if (inputPost == null) return 'nan';
 
-    return convertCurrencyToByn(post: inputPost, value: value).roundNumber(2);
+    return convertCurrencyToByn(post: inputPost, value: value).roundNumber(4);
   }
 
   if (inputPost == null || outputPost == null) {
@@ -43,7 +69,7 @@ String currencyConverter({
 
   final inByn = convertCurrencyToByn(post: inputPost, value: value);
 
-  return convertBynToCurrency(post: outputPost, value: inByn).roundNumber(2);
+  return convertBynToCurrency(post: outputPost, value: inByn).roundNumber(4);
 }
 
 double convertBynToCurrency({
