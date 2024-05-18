@@ -1,9 +1,7 @@
 import 'package:curency_converter/pages/converter/di/get_it.dart';
 import 'package:curency_converter/pages/converter/repo/select_currency_repo.dart';
 import 'package:curency_converter/pages/converter/util/currency.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 Future<void> showSelectCurrencyBottomSheet(BuildContext context) {
   return showModalBottomSheet(
@@ -56,6 +54,9 @@ class _SelectCurrencyBottomSheetContentState
 
   @override
   Widget build(BuildContext context) {
+    final cur = List<Currency>.from(Currency.values)
+      ..sort((a, b) => a.value.compareTo(b.value));
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -67,7 +68,7 @@ class _SelectCurrencyBottomSheetContentState
               runSpacing: 4,
               spacing: 4,
               children: [
-                ...Currency.values.map(
+                ...cur.map(
                   (e) => e == Currency.unknown
                       ? const SizedBox()
                       : FilterChip(
