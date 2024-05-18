@@ -4,9 +4,7 @@ import 'package:curency_converter/pages/converter/repo/currency_repo.dart';
 import 'package:curency_converter/pages/converter/repo/select_currency_repo.dart';
 import 'package:curency_converter/pages/converter/widgets/currency_converter_widget.dart';
 import 'package:curency_converter/pages/converter/widgets/list_currencies.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
@@ -38,35 +36,58 @@ class _ConverterPageState extends State<ConverterPage>
             },
             child: Scaffold(
               appBar: AppBar(
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Курсы валют НБ РБ'),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'на $date',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          Visibility(
-                            visible: state.converterStates ==
-                                ConverterStates.loading,
-                            child: const SizedBox(
-                              height: 12,
-                              width: 12,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                              ),
+                title: SafeArea(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Курсы валют НБ РБ'),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'на $date',
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
-                          )
-                        ],
+                            Visibility(
+                              visible: state.converterStates ==
+                                  ConverterStates.loading,
+                              child: const SizedBox(
+                                height: 12,
+                                width: 12,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.date_range_outlined),
+                    onPressed: (){
+                      showDatePicker(
+                        context: context,
+                        locale: const Locale('ru'),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime.now().add(const Duration(days: 1)),
+                        currentDate: DateTime.now(),
+                        initialDate: state.selectedDate,
+                      ).then((value) {
+                        if (value != null) {
+                          context
+                              .read<ConverterBloc>()
+                              .fetchCurrencies(dateTime: value);
+                        }
+                      });
+                    },
+                  ),
+                ]
               ),
               body: Stack(
                 fit: StackFit.expand,
@@ -75,7 +96,7 @@ class _ConverterPageState extends State<ConverterPage>
                     model: state,
                   ),
                   DraggableScrollableSheet(
-                    initialChildSize: 0.5,
+                    initialChildSize: 0.08,
                     minChildSize: 0.08,
                     maxChildSize: 0.5,
                     snap: true,
@@ -99,25 +120,6 @@ class _ConverterPageState extends State<ConverterPage>
                     },
                   ),
                 ],
-              ),
-              floatingActionButton: FloatingActionButton(
-                child: const Icon(Icons.date_range_outlined),
-                onPressed: () {
-                  showDatePicker(
-                    context: context,
-                    locale: const Locale('ru'),
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime.now().add(const Duration(days: 1)),
-                    currentDate: DateTime.now(),
-                    initialDate: state.selectedDate,
-                  ).then((value) {
-                    if (value != null) {
-                      context
-                          .read<ConverterBloc>()
-                          .fetchCurrencies(dateTime: value);
-                    }
-                  });
-                },
               ),
             ),
           );
