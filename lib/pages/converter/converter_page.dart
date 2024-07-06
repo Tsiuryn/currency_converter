@@ -27,10 +27,11 @@ class _ConverterPageState extends State<ConverterPage>
     _scrollableController = DraggableScrollableController();
   }
 
-  void _onTapDraggableButton(){
+  void _onTapDraggableButton() {
     final size = _scrollableController.size;
-    final newSize = size == .5 ? .08 : .5;
-    _scrollableController.animateTo(newSize, duration: const Duration(milliseconds: 300), curve: Curves.linear);
+    final newSize = size == .45 ? .08 : .45;
+    _scrollableController.animateTo(newSize,
+        duration: const Duration(milliseconds: 300), curve: Curves.linear);
   }
 
   @override
@@ -114,7 +115,7 @@ class _ConverterPageState extends State<ConverterPage>
                     controller: _scrollableController,
                     initialChildSize: 0.08,
                     minChildSize: 0.08,
-                    maxChildSize: 0.5,
+                    maxChildSize: 0.45,
                     snap: true,
                     builder: (context, controller) {
                       return DecoratedBox(
@@ -138,12 +139,16 @@ class _ConverterPageState extends State<ConverterPage>
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            const Icon(Icons.keyboard_arrow_up_rounded),
+                                            const Icon(Icons
+                                                .keyboard_arrow_up_rounded),
                                             Padding(
-                                              padding: const EdgeInsets.only(bottom: 16.0),
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 16.0),
                                               child: Text(
                                                 'Конвертер валют',
-                                                style: Theme.of(context).textTheme.bodyMedium,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium,
                                               ),
                                             ),
                                           ],
@@ -154,7 +159,13 @@ class _ConverterPageState extends State<ConverterPage>
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    showSelectCurrencyBottomSheet(context);
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                                      return SelectCurrency(posts: state.posts);
+                                    }));
+                                    // showSelectCurrencyBottomSheet(
+                                    //   context,
+                                    //   posts: state.posts,
+                                    // );
                                   },
                                   icon: const Icon(Icons.select_all_rounded),
                                 ),
