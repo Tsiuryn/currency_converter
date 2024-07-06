@@ -2,8 +2,10 @@ import 'package:curency_converter/pages/converter/bloc/converter_bloc.dart';
 import 'package:curency_converter/pages/converter/di/get_it.dart';
 import 'package:curency_converter/pages/converter/repo/currency_repo.dart';
 import 'package:curency_converter/pages/converter/repo/select_currency_repo.dart';
+import 'package:curency_converter/pages/converter/select_currency/select_currency_bottom_sheet.dart';
 import 'package:curency_converter/pages/converter/widgets/currency_converter_widget.dart';
 import 'package:curency_converter/pages/converter/widgets/list_currencies.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -17,6 +19,20 @@ class ConverterPage extends StatefulWidget {
 
 class _ConverterPageState extends State<ConverterPage>
     with TickerProviderStateMixin {
+  late DraggableScrollableController _scrollableController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollableController = DraggableScrollableController();
+  }
+
+  void _onTapDraggableButton(){
+    final size = _scrollableController.size;
+    final newSize = size == .5 ? .08 : .5;
+    _scrollableController.animateTo(newSize, duration: const Duration(milliseconds: 300), curve: Curves.linear);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ConverterBloc>(
@@ -95,6 +111,7 @@ class _ConverterPageState extends State<ConverterPage>
                     model: state,
                   ),
                   DraggableScrollableSheet(
+                    controller: _scrollableController,
                     initialChildSize: 0.08,
                     minChildSize: 0.08,
                     maxChildSize: 0.5,
@@ -109,6 +126,40 @@ class _ConverterPageState extends State<ConverterPage>
                         ),
                         child: Column(
                           children: [
+                            Stack(
+                              alignment: Alignment.centerRight,
+                              children: [
+                                GestureDetector(
+                                  onTap: _onTapDraggableButton,
+                                  behavior: HitTestBehavior.opaque,
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const Icon(Icons.keyboard_arrow_up_rounded),
+                                            Padding(
+                                              padding: const EdgeInsets.only(bottom: 16.0),
+                                              child: Text(
+                                                'Конвертер валют',
+                                                style: Theme.of(context).textTheme.bodyMedium,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    showSelectCurrencyBottomSheet(context);
+                                  },
+                                  icon: const Icon(Icons.select_all_rounded),
+                                ),
+                              ],
+                            ),
                             Expanded(
                                 child: SingleChildScrollView(
                                     controller: controller,

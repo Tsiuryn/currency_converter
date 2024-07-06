@@ -84,36 +84,36 @@ class _CurrencyConverterWidgetState extends State<CurrencyConverterWidget> {
               const SizedBox(
                 height: 8,
               ),
-              Stack(
-                alignment: Alignment.centerRight,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(Icons.keyboard_arrow_up_rounded),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 16.0),
-                              child: Text(
-                                'Конвертер валют',
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      showSelectCurrencyBottomSheet(context);
-                    },
-                    icon: const Icon(Icons.select_all_rounded),
-                  ),
-                ],
-              ),
+              // Stack(
+              //   alignment: Alignment.centerRight,
+              //   children: [
+              //     Row(
+              //       children: [
+              //         Expanded(
+              //           child: Column(
+              //             mainAxisSize: MainAxisSize.min,
+              //             children: [
+              //               const Icon(Icons.keyboard_arrow_up_rounded),
+              //               Padding(
+              //                 padding: const EdgeInsets.only(bottom: 16.0),
+              //                 child: Text(
+              //                   'Конвертер валют',
+              //                   style: Theme.of(context).textTheme.bodyMedium,
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //     IconButton(
+              //       onPressed: () {
+              //         showSelectCurrencyBottomSheet(context);
+              //       },
+              //       icon: const Icon(Icons.select_all_rounded),
+              //     ),
+              //   ],
+              // ),
               ..._cController.currencies.map(
                 (currency) {
                   return Row(
