@@ -37,7 +37,10 @@ import 'package:google_fonts/google_fonts.dart';
 }*/
 
 class SelectCurrency extends StatelessWidget {
-  const SelectCurrency({super.key, required this.posts,});
+  const SelectCurrency({
+    super.key,
+    required this.posts,
+  });
 
   final List<Post> posts;
 
@@ -58,7 +61,6 @@ class SelectCurrency extends StatelessWidget {
     );
   }
 }
-
 
 class SelectCurrencyBottomSheetContent extends StatefulWidget {
   final List<Currency> selectedCurrencies;
@@ -109,7 +111,6 @@ class _SelectCurrencyBottomSheetContentState
         setSelectedCurrency(currencies);
       }
     });
-
   }
 
   @override
@@ -122,7 +123,10 @@ class _SelectCurrencyBottomSheetContentState
       children: [
         Padding(
           padding: const EdgeInsets.only(right: 20.0),
-          child: IconButton(onPressed: Navigator.of(context).pop, icon: Icon(Icons.close_rounded),),
+          child: IconButton(
+            onPressed: Navigator.of(context).pop,
+            icon: Icon(Icons.close_rounded),
+          ),
         ),
         Expanded(
           child: SingleChildScrollView(
@@ -135,7 +139,7 @@ class _SelectCurrencyBottomSheetContentState
                           .firstWhereOrNull((post) => post.currency == e)
                           ?.curName ??
                       '';
-                  if(e == Currency.byn){
+                  if (e == Currency.byn) {
                     name = 'Белорусский рубль';
                   }
                   return e == Currency.unknown
@@ -143,7 +147,9 @@ class _SelectCurrencyBottomSheetContentState
                       : Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            CheckboxListTile(
+                            SwitchListTile(
+                                activeTrackColor:
+                                    e == Currency.byn ? null : Colors.blue,
                                 title: Column(
                                   children: [
                                     Row(
@@ -161,7 +167,9 @@ class _SelectCurrencyBottomSheetContentState
                                             maxLines: 2,
                                             textAlign: TextAlign.center,
                                             overflow: TextOverflow.ellipsis,
-                                            style: GoogleFonts.cormorantGaramond().copyWith(
+                                            style:
+                                                GoogleFonts.cormorantGaramond()
+                                                    .copyWith(
                                               fontSize: 18,
                                             ),
                                           ),
@@ -171,21 +179,23 @@ class _SelectCurrencyBottomSheetContentState
                                   ],
                                 ),
                                 visualDensity: const VisualDensity(
-                                    horizontal:
-                                        VisualDensity.minimumDensity,
+                                    horizontal: VisualDensity.minimumDensity,
                                     vertical: VisualDensity.minimumDensity),
                                 value: _selectedCurrency.contains(e),
-                                enabled: e != Currency.byn,
-                                onChanged: (value) {
-                                  setState(() {
-                                    if (value == true) {
-                                      _selectedCurrency.add(e);
-                                    } else {
-                                      _selectedCurrency.remove(e);
-                                    }
-                                      _isSelectedAll = _selectedCurrency.length > 1;
-                                  });
-                                }),
+                                // enabled: e != Currency.byn,
+                                onChanged: e == Currency.byn
+                                    ? null
+                                    : (value) {
+                                        setState(() {
+                                          if (value == true) {
+                                            _selectedCurrency.add(e);
+                                          } else {
+                                            _selectedCurrency.remove(e);
+                                          }
+                                          _isSelectedAll =
+                                              _selectedCurrency.length > 1;
+                                        });
+                                      }),
                             const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 16),
                               child: Divider(),
@@ -211,7 +221,10 @@ class _SelectCurrencyBottomSheetContentState
                         .setCurrencies(_selectedCurrency.toList());
                     Navigator.of(context).pop();
                   },
-                  icon: Icon(Icons.save, size: 32,),
+                  icon: Icon(
+                    Icons.save,
+                    size: 32,
+                  ),
                 ),
               ),
               Align(

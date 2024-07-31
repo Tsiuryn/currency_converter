@@ -159,7 +159,8 @@ class _ConverterPageState extends State<ConverterPage>
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) {
                                       return SelectCurrency(posts: state.posts);
                                     }));
                                     // showSelectCurrencyBottomSheet(
