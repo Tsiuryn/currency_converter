@@ -6,6 +6,7 @@ import 'package:curency_converter/pages/converter/util/currency.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /*Future<void> showSelectCurrencyBottomSheet(BuildContext context,
     {required List<Post> posts}) {
@@ -150,19 +151,18 @@ class _SelectCurrencyBottomSheetContentState
                                         Text(
                                           e.value,
                                           style: const TextStyle(
-                                            fontWeight: FontWeight.w800,
+                                            fontWeight: FontWeight.w500,
                                             fontSize: 18,
                                           ),
                                         ),
                                         Expanded(
                                           child: Text(
                                             ' $name',
-                                            maxLines: 1,
+                                            maxLines: 2,
                                             textAlign: TextAlign.center,
                                             overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 16,
+                                            style: GoogleFonts.cormorantGaramond().copyWith(
+                                              fontSize: 18,
                                             ),
                                           ),
                                         ),

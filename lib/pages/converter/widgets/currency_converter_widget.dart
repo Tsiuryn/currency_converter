@@ -1,5 +1,4 @@
 import 'package:curency_converter/pages/converter/bloc/converter_bloc.dart';
-import 'package:curency_converter/pages/converter/select_currency/select_currency_bottom_sheet.dart';
 import 'package:curency_converter/pages/converter/util/currency.dart';
 import 'package:curency_converter/pages/converter/util/currency_converter_controller.dart';
 import 'package:curency_converter/pages/converter/widgets/input_widget.dart';
@@ -84,36 +83,6 @@ class _CurrencyConverterWidgetState extends State<CurrencyConverterWidget> {
               const SizedBox(
                 height: 8,
               ),
-              // Stack(
-              //   alignment: Alignment.centerRight,
-              //   children: [
-              //     Row(
-              //       children: [
-              //         Expanded(
-              //           child: Column(
-              //             mainAxisSize: MainAxisSize.min,
-              //             children: [
-              //               const Icon(Icons.keyboard_arrow_up_rounded),
-              //               Padding(
-              //                 padding: const EdgeInsets.only(bottom: 16.0),
-              //                 child: Text(
-              //                   'Конвертер валют',
-              //                   style: Theme.of(context).textTheme.bodyMedium,
-              //                 ),
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //     IconButton(
-              //       onPressed: () {
-              //         showSelectCurrencyBottomSheet(context);
-              //       },
-              //       icon: const Icon(Icons.select_all_rounded),
-              //     ),
-              //   ],
-              // ),
               ..._cController.currencies.map(
                 (currency) {
                   return Row(
