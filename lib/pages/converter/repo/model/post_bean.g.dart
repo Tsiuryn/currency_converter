@@ -7,10 +7,10 @@ part of 'post_bean.dart';
 // **************************************************************************
 
 PostBean _$PostBeanFromJson(Map<String, dynamic> json) => PostBean(
-      curId: json['Cur_ID'] as int?,
+      curId: (json['Cur_ID'] as num?)?.toInt(),
       date: json['Date'] as String?,
       curAbbreviation: json['Cur_Abbreviation'] as String?,
-      curScale: json['Cur_Scale'] as int?,
+      curScale: (json['Cur_Scale'] as num?)?.toInt(),
       curOfficialRate: (json['Cur_OfficialRate'] as num?)?.toDouble(),
       curName: json['Cur_Name'] as String?,
     );
